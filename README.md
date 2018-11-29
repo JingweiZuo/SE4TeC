@@ -5,7 +5,7 @@
 
 ## Outline:
 
-The instrodcution of the file structure inside the project
+The introdcution of the file structure inside the project
 
 ### 1. Cluster_Docker
 
