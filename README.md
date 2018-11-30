@@ -15,9 +15,22 @@ We provide an 1-click Spark cluster, powered by Docker, which contains the suppo
 
 We implement all algorithms mentioned in the Paper under Python3.6, which can be distinguished by Centralized Version and Distributed Version. 
 
-### 3. Video Cluster   
+### 3. Demo1: Scalability of SE2TeC
 
-In order to show the efficiency and the scalabity of SE2TeC, we give a exploration of our cluster by a video, where the attendees can get deeper understanding about the distribution mecanism adopted inside our algorithm, as well as the relationship between the cluster capacity and the performance of the program. 
+In order to show the efficiency and the scalabity of SE2TeC, we give a exploration of our cluster by a video ``` Demo1_scalability.mp4```, where the attendees can get deeper understanding about the distribution mecanism adopted inside our algorithm, as well as the relationship between the cluster capacity and the performance of the program.  
+For example, here shows the informations about the tasks distributed in a single executor. As we set 4 CPUs for each executors, then four tasks can run in parallel.
+![The tasks in executors](images/ClusterTask.png)  
+The video will show that how we can distribute the algorithm into various computation tasks and allocate them to different nodes/executors.   
+
+
+<img src="images/Demo1_stage.tiff" width="80%" height="80%" />  
+Figure 1. Stages in a Job
+ 
+
+
+<img src="images/Demo1_job.tiff" width="80%" height="80%" />  
+Figure 2. Jobs in an Application
+
 
 ### 4. GUI - Shapelet Extraction
 
