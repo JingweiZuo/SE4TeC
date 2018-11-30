@@ -1,4 +1,4 @@
-# SE2TeC
+# SE4TeC
 ## A Scalable engine for Efficient and Expressive Time series Classification
 
 <center>By Jingwei ZUO, Karine ZEITOUNI and Yehia TAHER.</center>
@@ -15,9 +15,9 @@ We provide an 1-click Spark cluster, powered by Docker, which contains the suppo
 
 We implement all algorithms mentioned in the Paper under Python3.6, which can be distinguished by Centralized Version and Distributed Version. 
 
-### 3. Demo1: Scalability of SE2TeC
+### 3. Demo1: Scalability of SE4TeC
 
-In order to show the efficiency and the scalabity of SE2TeC, we give a exploration of our cluster by a video ``` Demo1_scalability.mp4```, where the attendees can get deeper understanding about the distribution mecanism adopted inside our algorithm, as well as the relationship between the cluster capacity and the performance of the program.  
+In order to show the efficiency and the scalabity of SE4TeC, we give a exploration of our cluster by a video ``` Demo1_scalability.mp4```, where the attendees can get deeper understanding about the distribution mecanism adopted inside our algorithm, as well as the relationship between the cluster capacity and the performance of the program.  
 For example, here shows the informations about the tasks distributed in a single executor. As we set 4 CPUs for each executors, then four tasks can run in parallel.
 ![The tasks in executors](images/ClusterTask.png)  
 The video will show that how we can distribute the algorithm into various computation tasks and allocate them to different nodes/executors.   
