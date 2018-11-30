@@ -5,11 +5,9 @@
 
 ## Outline:
 
-The introdcution of the file structure inside the project
-
 ### 1. Cluster_Docker
 
-We provide an 1-click Spark cluster, powered by Docker, which contains the support of PySpark and relative Python3 libraries. Users can modify flexibly the number of slave nodes inside the cluster, and simulate the enviroment locally. 
+As we utilize AWS EMR cluster during the test of the project. We provide an 1-click Spark cluster, powered by Docker. The cluster contains the support of PySpark and common Python3 libraries used in this project. Users can modify flexibly the number of slave nodes inside the cluster, and update the support inside each machine instance. and simulate the enviroment locally. 
 
 ### 2. Algorithms
 
@@ -23,12 +21,12 @@ For example, here shows the informations about the tasks distributed in a single
 The video will show that how we can distribute the algorithm into various computation tasks and allocate them to different nodes/executors.   
 
 
-<img src="images/Demo1_stage.tiff" width="80%" height="80%" />  
+<img src="images/Demo1_stage.jpg" width="80%" height="80%" />  
 Figure 1. Stages in a Job
  
 
 
-<img src="images/Demo1_job.tiff" width="80%" height="80%" />  
+<img src="images/Demo1_job.jpg" width="80%" height="80%" />  
 Figure 2. Jobs in an Application
 
 
