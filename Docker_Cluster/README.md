@@ -74,5 +74,5 @@ tf.count()
 ```
 
 ## Maintainer
-* jingwei point zuo at point uvsq point fr
+* jingwei point zuo at uvsq point fr
 
