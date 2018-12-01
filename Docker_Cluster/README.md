@@ -2,7 +2,7 @@
 
 # How to use HDFS/Spark Workbench
 
-To start an HDFS/Spark Workbench by one single commande:
+To start an HDFS/Spark Workbench by one single command:
 ```
     docker-compose up -d
 ```
