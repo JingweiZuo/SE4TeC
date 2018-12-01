@@ -1,5 +1,5 @@
 # SE4TeC
-## A Scalable engine for Efficient and Expressive Time series Classification
+## A Scalable Engine for efficient and expressive Time Series Classification
 
 <center>By Jingwei ZUO, Karine ZEITOUNI and Yehia TAHER.</center>
 
