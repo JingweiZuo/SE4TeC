@@ -7,7 +7,7 @@ To start an HDFS/Spark Workbench by one single command:
     docker-compose up -d
 ```
 
-docker-compose works to scale up spark-workers, modify ```docker-compose.yml``` by concatenating the following configuration:
+By default, we set 1 master, 6 workers inside the configuration. Nevertheless, ```docker-compose``` works to scale up the cluster capacity, users can just modify ```docker-compose.yml``` by concatenating the following configuration:
 
 ```
  spark-workerN:
