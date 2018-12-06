@@ -13,28 +13,36 @@ As we utilize AWS EMR cluster during the test of the project. We provide an 1-cl
 
 We implement all algorithms mentioned in the Paper under Python3.6, which can be distinguished by Centralized Version and Distributed Version. 
 
-### 3. Demo1: Scalability of SE4TeC
+### 3. Demo1: - Shapelet Extraction
 
-In order to show the efficiency and the scalabity of SE4TeC, we give a exploration of our cluster by a video ``` Demo1_scalability.mp4```, where the attendees can get deeper understanding about the distribution mecanism adopted inside our algorithm, as well as the relationship between the cluster capacity and the performance of the program.  
-For example, here shows the informations about the tasks distributed in a single executor. As we set 4 CPUs for each executors, then four tasks can run in parallel.
-![The tasks in executors](images/ClusterTask.png)  
-The video will show that how we can distribute the algorithm into various computation tasks and allocate them to different nodes/executors.   
-
-
-<img src="images/Demo1_stage.jpg" width="80%" height="80%" />  
-Figure 1. Stages in a Job
- 
-
-
-<img src="images/Demo1_job.jpg" width="80%" height="80%" />  
-Figure 2. Jobs in an Application
-
-
-### 4. GUI - Shapelet Extraction
-
-There are four parts in GUI demonstration for Shapelet Extraction:  
+There are four principal parts during GUI demonstration for Shapelet Extraction:  
 
 - Distance Profile  
 - Matrix Profile   
 - Representative Profile/Power  
 - Discriminative Profile/Power
+
+Besides, users can decide the number of ```Shapelets``` to extract for each class, which can be utilized by the kNN classifier to predict the class of a test instance. The extracted Shapelets can be viewed directly after the extraction.  
+
+Here is a GUI capture for the application: 
+<img src="images/Demo1_GUI.jpg" width="80%" height="80%" />  
+Figure 1. GUI for Shapelet Extraction in SE4TeC
+
+### 4. Demo2: Scalability of SE4TeC
+
+In order to show the efficiency and the scalabity of SE4TeC, we give a exploration of our cluster by a video ``` Demo1_scalability.mp4```, where the attendees can get deeper understanding about the distribution mecanism adopted inside our algorithm, as well as the relationship between the cluster capacity and the performance of the program.  
+For example, here shows the informations about the tasks distributed in a single executor. As we set 4 CPUs for each executors, then four tasks can run in parallel.  
+
+<img src="images/ClusterTask.png" width="60%" height="80%" />  
+Figure 2. The tasks in executors
+
+The video will show that how we can distribute the algorithm into various computation tasks and allocate them to different nodes/executors.   
+
+<img src="images/Demo2_stage.jpg" width="60%" height="80%" />  
+Figure 3. Stages in a Job
+ 
+
+
+<img src="images/Demo2_job.jpg" width="60%" height="80%" />  
+Figure 4. Jobs in an Application
+
