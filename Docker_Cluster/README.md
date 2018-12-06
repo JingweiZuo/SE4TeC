@@ -2,12 +2,12 @@
 
 # How to use HDFS/Spark Workbench
 
-To start an HDFS/Spark Workbench:
+To start an HDFS/Spark Workbench by one single command:
 ```
     docker-compose up -d
 ```
 
-docker-compose works to scale up spark-workers, modify ```docker-compose.yml``` by concatenating the following configuration:
+By default, we set 1 master, 6 workers inside the configuration. Nevertheless, ```docker-compose``` works to scale up the cluster capacity, users can just modify ```docker-compose.yml``` by concatenating the following configuration:
 
 ```
  spark-workerN:
@@ -23,7 +23,7 @@ docker-compose works to scale up spark-workers, modify ```docker-compose.yml``` 
       - ./hadoop.env
 ```  
 
-``` jingweizuo/pyspark-worker``` and ``` jingweizuo/pyspark-worker``` contain Python3 enviroment support for Apache Spark, as well as several common packages:
+``` jingweizuo/pyspark-master``` and ``` jingweizuo/pyspark-worker``` contain Python3 enviroment support for Apache Spark, as well as several common packages:
 
 * pyspark 
 * numpy 
@@ -74,5 +74,5 @@ tf.count()
 ```
 
 ## Maintainer
-* jingwei point zuo at point uvsq point fr
+* jingwei point zuo at uvsq point fr
 

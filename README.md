@@ -1,5 +1,5 @@
 # SE4TeC
-## A Scalable engine for Efficient and Expressive Time series Classification
+## A Scalable Engine for efficient and expressive Time Series Classification
 
 <center>By Jingwei ZUO, Karine ZEITOUNI and Yehia TAHER.</center>
 
@@ -7,7 +7,7 @@
 
 ### 1. Cluster_Docker
 
-As we utilize AWS EMR cluster during the test of the project. We provide an 1-click Spark cluster, powered by Docker. The cluster contains the support of PySpark and common Python3 libraries used in this project. Users can modify flexibly the number of slave nodes inside the cluster, and update the support inside each machine instance. and simulate the enviroment locally. 
+As we utilize AWS EMR cluster during the test of the project, then we provide an 1-click Spark cluster, powered by Docker, to facilitate the users to simulate the program enviroment locally. The cluster contains the support of PySpark and common Python3 libraries used in this project. Users can modify flexibly the number of slave nodes inside the cluster, and update the support inside each machine instance. 
 
 ### 2. Algorithms
 
