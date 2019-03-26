@@ -25,8 +25,14 @@ There are four principal parts during GUI demonstration for Shapelet Extraction:
 Besides, users can decide the number of ```Shapelets``` to extract for each class, which can be utilized by the kNN classifier to predict the class of a test instance. The extracted Shapelets can be viewed directly after the extraction.  
 
 Here is a GUI capture for the application: 
-<img src="images/Demo1_GUI.jpg" width="80%" height="80%" />  
-Figure 1. GUI for Shapelet Extraction in SE4TeC
+<img src="images/Demo1_GUI_1.png" width="80%" height="80%" />  
+Figure 1. SE4TeC GUI: Candidate Shapelet Extraction
+
+<img src="images/Demo1_GUI_2.png" width="80%" height="80%" />  
+Figure 2. SE4TeC GUI: Shapelet result for each class
+
+<img src="images/Demo1_GUI_3.png" width="80%" height="80%" />  
+Figure 3. SE4TeC GUI: Prediction result for testing data
 
 ### 4. Demo2: Scalability of SE4TeC
 
@@ -34,15 +40,13 @@ In order to show the efficiency and the scalabity of SE4TeC, we give a explorati
 For example, here shows the informations about the tasks distributed in a single executor. As we set 4 CPUs for each executors, then four tasks can run in parallel.  
 
 <img src="images/ClusterTask.png" width="60%" height="80%" />  
-Figure 2. The tasks in executors
+Figure 4. The tasks in executors
 
 The video will show that how we can distribute the algorithm into various computation tasks and allocate them to different nodes/executors.   
 
 <img src="images/Demo2_stage.jpg" width="60%" height="80%" />  
-Figure 3. Stages in a Job
- 
-
+Figure 5. Stages in a Job
 
 <img src="images/Demo2_job.jpg" width="60%" height="80%" />  
-Figure 4. Jobs in an Application
+Figure 6. Jobs in an Application
 
