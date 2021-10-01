@@ -59,7 +59,7 @@ def parse_args(args):
         '--distance',
         dest="distance_measure",
         help="Specify the distance measure. Three options are available: brute, mass, dtw.",
-        default=''
+        default='mass_v2'
     )
     parser.add_argument(
         '-c',
@@ -87,7 +87,7 @@ def parse_args(args):
         '--algo',
         dest="algo",
         help="Choose the old/new algorithm",
-        default='use_old'
+        default='use_new'
     )
     parser.add_argument(
         '-p',
