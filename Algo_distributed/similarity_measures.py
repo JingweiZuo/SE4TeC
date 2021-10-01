@@ -1,6 +1,18 @@
 import numpy as np
-import line_profiler
+#from utils.old_Utils import old_Utils
+#import line_profiler
 
+
+def calculate_distances(timeseries, subsequence, distance_measure):
+    if distance_measure == "mass_v1" :
+        return mass_v1(subsequence, timeseries)
+    elif distance_measure == "mass_v2" :
+        return mass_v2(timeseries, subsequence)
+    elif distance_measure == "brute":
+        return euclidean_distance_unequal_lengths(timeseries, subsequence)
+
+def euclidean_distance(t1, t2):
+    return np.sqrt(sum((t1 - t2) ** 2))
 
 def sliding_window(sequence, win_size, step=1):
     # Verify the inputs
@@ -22,21 +34,7 @@ def sliding_window(sequence, win_size, step=1):
     for i in range(0, int(num_chunks * step), step):
         yield sequence[i:i + win_size]
 
-
-def calculate_distances(timeseries, subsequence, distance_measure):
-    if distance_measure == "mass_v1":
-        return mass_v1(subsequence, timeseries)
-    elif distance_measure == "mass_v2":
-        return mass_v2(timeseries, subsequence)
-    elif distance_measure == "brute":
-        return euclidean_distance_unequal_lengths(timeseries, subsequence)
-
-
-def euclidean_distance(t1, t2):
-    return np.sqrt(sum((t1 - t2) ** 2))
-
-
-def euclidean_distance_unequal_lengths(t, s):  ##O(m)
+def euclidean_distance_unequal_lengths(t, s):##O(m)
     ## return a array of distance between 'shapelet' and every slices of 'timeseries'
     distances = np.array([euclidean_distance(np.array(s1), s) for s1 in sliding_window(t, len(s))])
     return distances
@@ -65,11 +63,11 @@ def dot_products_2(q, t):
     qt = np.fft.ifft(q_raf * t_af)
     return qt
 
-
 def mass_v1(q, t):
     m, n = len(q), len(t)
     # Z-normalization of Query
     q = (q - np.mean(q)) / np.std(q)
+
     qt = dot_products_1(q, t)
     # compute the mean and standard deviation of Time Series
     sum_q = np.sum(q)
@@ -78,26 +76,21 @@ def mass_v1(q, t):
     # cache a cumulative sum of values
     cum_sum_t = np.cumsum(t)
     cum_sum_t2 = np.cumsum(np.power(t, 2))
-
-    # sum of x and x square for [0, n-m] subsequences of length m
-    # sumt2 = cum_sum_t2[m-1:] - cum_sum_t2[:- m+1]
-    # sumt = cum_sum_t[m-1:] - cum_sum_t[:- m+1]
-    sumt2 = cum_sum_t2[m:] - cum_sum_t2[: n - m]
-    sumt = cum_sum_t[m:] - cum_sum_t[: n - m]
+    # 71
+    sumt = cum_sum_t[m - 1:] - np.concatenate([[0], cum_sum_t[:n - m]])
+    sumt2 = cum_sum_t2[m - 1:] - np.concatenate([[0], cum_sum_t2[:n - m]])
     meant = sumt / m
     # standard deviation of every subsequence of length m
     sigmat2 = (sumt2 / m) - (np.power(meant, 2))
     sigmat = np.sqrt(sigmat2)
 
-    dist = (sumt2 - 2 * sumt * meant + m * (np.power(meant, 2))) / sigmat2 - 2 * (
-                qt[m:n] - sum_q * meant) / sigmat + sum_q2
+    dist = (sumt2 - 2 * sumt * meant + m * (np.power(meant, 2))) / sigmat2 - 2 * (qt[m - 1:n] - sum_q * meant) / sigmat + sum_q2
     dist = np.sqrt(dist)
     # distance here is a complex number, need to return its amplitude/absolute value
     # return a vector with size of n-m+1
     return np.abs(dist)
 
-
-# @profile
+##@profile
 def mass_v2(x, y):
     # x is the data, y is the query
     n, m = len(x), len(y)
@@ -106,24 +99,16 @@ def mass_v2(x, y):
     meany = np.mean(y)
 
     sigmay = np.std(y)
-
     # compute x stats -- O(n)
     # compute the average of the first m elements in 'x'
     def running_mean(x, N):
         cumsum = np.cumsum(np.insert(x, 0, np.zeros(N)))
-        cum_v = cumsum[N:] - cumsum[:-N]
-        cum_v1 = np.divide(cum_v[:N], range(1, N + 1))
-        cum_v2 = cum_v[N:] / float(N)
-        return np.concatenate([cum_v1, cum_v2])
+        return (cumsum[N:] - cumsum[:-N]) / float(N)
 
     def running_std(x, N):
         x2 = np.power(x, 2)
         cumsum2 = np.cumsum(np.insert(x2, 0, np.zeros(N)))
-        cum_v = cumsum2[N:] - cumsum2[:-N]
-        cum_v1 = np.divide(cum_v[:N], range(1, N + 1))
-        cum_v2 = cum_v[N:] / float(N)
-        cumstd2 = np.concatenate([cum_v1, cum_v2])
-        return (cumstd2 - running_mean(x, N) ** 2) ** 0.5
+        return ((cumsum2[N:] - cumsum2[:-N]) / float(N) - running_mean(x, N) ** 2) ** 0.5
 
     # compute the moving average and standard deviation of Time Series
     meanx = running_mean(x, m)
@@ -131,45 +116,36 @@ def mass_v2(x, y):
 
     # The main trick of getting dot products in O(n log n) time
     z = dot_products_2(y, x)
+    # dist = 2 * (m - (z[m-1:n] - m * meanx[m-1:n] * meany) / (sigmax[m-1:n] * sigmay))
     dist = 2 * (m - (z[m - 1:n] - m * meanx[m - 1:n] * meany) / (sigmax[m - 1:n] * sigmay))
     dist = np.sqrt(dist)
     # distance here is a complex number, need to return its amplitude/absolute value
     # return a vector with size of n-m+1
     return np.abs(dist)
 
-
 def running_mean(x, N):
     cumsum = np.cumsum(np.insert(x, 0, np.zeros(N)))
-    cum_v = cumsum[N:] - cumsum[:-N]
-    cum_v1 = np.divide(cum_v[:N], range(1, N + 1))
-    cum_v2 = cum_v[N:] / float(N)
-    return np.concatenate([cum_v1, cum_v2])
-
+    return (cumsum[N:] - cumsum[:-N]) / float(N)
 
 def running_std(x, N):
     x2 = np.power(x, 2)
     cumsum2 = np.cumsum(np.insert(x2, 0, np.zeros(N)))
-    cum_v = cumsum2[N:] - cumsum2[:-N]
-    cum_v1 = np.divide(cum_v[:N], range(1, N + 1))
-    cum_v2 = cum_v[N:] / float(N)
-    cumstd2 = np.concatenate([cum_v1, cum_v2])
-    return (cumstd2 - running_mean(x, N) ** 2) ** 0.5
+    return ((cumsum2[N:] - cumsum2[:-N]) / float(N) - running_mean(x, N) ** 2) ** 0.5
 
-
-# @profile
+#@profile
 def mass_v3(x, y, meanx, meany, sigmax, sigmay, sigmaQplus):
-    # x is the data, y is the query
+    #x is the data, y is the query
     n, m = len(x), len(y)
 
-    # The main trick of getting dot products in O(n log n) time
+    #The main trick of getting dot products in O(n log n) time
     z = dot_products_2(y, x)
-    # dist = 2 * m * (1 - (z[m-1:n]/m - meanx[m-1:n] * meany) / (sigmax[m-1:n] * sigmay))
-    # dist = np.sqrt(dist)
-    # distance here is a complex number, need to return its amplitude/absolute value
-    # return a vector with size of n-m+1
+    #dist = 2 * m * (1 - (z[m-1:n]/m - meanx[m-1:n] * meany) / (sigmax[m-1:n] * sigmay))
+    #dist = np.sqrt(dist)
+    #distance here is a complex number, need to return its amplitude/absolute value
+    #return a vector with size of n-m+1
 
     sigmaxy = sigmax * sigmay
-    q_ij = (z[m - 1:n] / m - meanx * meany) / sigmaxy
+    q_ij = (z[m-1:n] / m - meanx * meany) / sigmaxy
     dist = np.sqrt(2 * m * (1 - q_ij))
 
     # Q is a subsequence, T is the entire timeseries, meanT/sigmaT are lists of elements
@@ -177,13 +153,12 @@ def mass_v3(x, y, meanx, meany, sigmax, sigmay, sigmaQplus):
     # compute the LB profile: q_ij
     # q_ij[q_ij <= 0] = (m ** 0.5) * coeff
     # q_ij[q_ij > 0] = ((m * (1 - q_ij ** 2)) ** 0.5) * coeff
-    LB = np.abs(
-        np.where(q_ij <= 0, (m ** 0.5) * coeff, np.where(q_ij > 0, ((m * (1 - q_ij ** 2)) ** 0.5) * coeff, q_ij)))
-    qt = {idx: value for idx, value in enumerate(z[m - 1:n])}
+    LB = np.abs(np.where(q_ij <= 0, (m ** 0.5) * coeff, np.where(q_ij > 0, ((m * (1 - q_ij ** 2)) ** 0.5) * coeff, q_ij)))
+    qt = {idx: value for idx, value in enumerate(z[m-1:n])}
 
     lb_list = [(idx, dist) for idx, dist in enumerate(LB)]
     lb_list = sorted(lb_list, key=lambda d: d[1])
-    return np.abs(dist), qt, lb_list  # q_ij here is the LB profile
+    return np.abs(dist), qt, lb_list #q_ij here is the LB profile
 
 ##@profile
 def compute1Dist(meanQ, meanT, sigmaQ, sigmaT, QT, m):
