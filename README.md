@@ -50,3 +50,17 @@ Figure 5. Stages in a Job
 <img src="images/Demo2_job.jpg" width="60%" height="80%" />  
 Figure 6. Jobs in an Application
 
+
+### Citation
+
+If you find this repository useful in your research, please consider citing the following paper:
+
+```script
+@inproceedings{zuo2019exploring,
+  title={Exploring Interpretable Features for Large Time Series with SE4TeC.},
+  author={Zuo, Jingwei and Zeitouni, Karine and Taher, Yehia},
+  year={2019},
+  booktitle={22nd International Conference on Extending Database Technology (EDBT)},
+  pages={606--609}
+}
+```
